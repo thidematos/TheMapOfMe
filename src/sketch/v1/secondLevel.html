@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tristeza =[</title>
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../dist/output.css" />
+
+    <script defer src="puzzle.js"></script>
+    <script defer src="secondLevel.js"></script>
+  </head>
+  <body
+    class="bg-brancoAzulado flex flex-col justify-center items-center gap-10"
+  >
+    <div
+      class="modal hidden bg-gray-100 w-[50vw] h-[50vh] absolute z-[9999] rounded-lg shadow-lg flex-row justify-center items-center p-10 gap-3"
+    >
+      <img src="assets/end-2.png" alt="" class="w-[40%]" />
+      <div class="flex flex-col justify-evenly items-center w-1/2 h-full">
+        <h1 class="modal__title font-amatic text-5xl text-orange-300 font-bold">
+          Tristeza e desânimo...
+        </h1>
+        <p
+          class="modal__description text-lg font-jakarta text-gray-700 text-center"
+        >
+          Jorge mostrou que, quando nos decepcionamos, ficamos tristes... Essa
+          tristeza pode nos deixar desanimados. Só não podemos esquecer que
+          amanhã será um novo dia mais bonito!
+        </p>
+        <a
+          href="#"
+          class="flex flex-col justify-center items-center font-amatic text-3xl drop-shadow-md font-bold text-azul"
+          ><img
+            src="assets/map.png"
+            alt=""
+            class="drop-shadow-lg w-[40%]"
+          />Mapa da Aventura!</a
+        >
+      </div>
+      <div class="hidden flex-col justify-center items-center gap-3">
+        <img src="assets/puzzle-2.jpg" class="w-[50%] borders" alt="" />
+        <progress
+          value="0"
+          max="100"
+          id="progressBar"
+          class="bg-orange-300 rounded-lg"
+        ></progress>
+      </div>
+    </div>
+    <div class="modal__cover hidden absolute z-[9998]"></div>
+    <nav class="w-screen p-8 flex flex-row justify-center items-center gap-8">
+      <div class="flex flex-row justify-center items-center">
+        <img src="assets/logo300.png" alt="" class="w-[30%]" />
+        <h1 class="font-amatic text-7xl">The Map of Me</h1>
+      </div>
+      <header
+        class="hint__container flex flex-row justify-center items-center gap-6"
+      >
+        <div
+          class="hint__wrapper bg-gray-100 p-8 flex flex-col justify-center items-center gap-2 rounded-lg shadow-lg text-gray-900"
+        >
+          <h3 class="hint__title font-amatic text-5xl">
+            Jorge queria brincar na rua...
+          </h3>
+          <p class="hint__description text-xl text-center">
+            Jorge estava ansioso para andar de bicicleta na rua.
+          </p>
+          <p
+            class="text-xl text-center flex flex-row justify-center items-center gap-2"
+          >
+            Quando viu pela janela que estava chovendo, Jorge ficou
+            <span class="text-5xl inline font-amatic text-azul">triste...</span>
+          </p>
+          <p class="hint__keyword text-xl flex flex-row items-center gap-2">
+            Quando está triste, Jorge fica
+            <span class="text-5xl inline font-amatic text-azul"
+              >desanimado...</span
+            >
+          </p>
+        </div>
+        <img src="assets/rain.png" alt="" class="w-[20%]" />
+      </header>
+    </nav>
+    <main class="flex flex-col justify-center items-center gap-5">
+      <h2 class="font-amatic font-bold text-4xl text-gray-700">
+        Vamos ver como está Jorge
+      </h2>
+      <div class="spaces__container borders w-[1000px] h-[600px]"></div>
+      <div>
+        <img
+          src="assets/dica.png"
+          alt=""
+          class="hint__btn absolute right-32 top-[60%] drop-shadow-xl"
+        />
+      </div>
+      <a
+        href="#"
+        class="absolute left-32 top-[60%] flex flex-col justify-center items-center font-amatic text-3xl text-gray-700 font-bold bg-azulClaro p-4 rounded-lg shadow-xl drop-shadow-lg"
+        ><img src="assets/map.png" alt="" class="drop-shadow-md" />Mapa da
+        Aventura!</a
+      >
+    </main>
+    <aside
+      class="pieces__container flex flex-row overflow-x-scroll w-[80vw] gap-8"
+    ></aside>
+    <footer class=""></footer>
+  </body>
+</html>

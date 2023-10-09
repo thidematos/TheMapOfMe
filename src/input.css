@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------- GENERAL ------------------ */
+.text-strong {
+  @apply text-orange-500 font-bold;
+}
+
+.btn__hash {
+  @apply cursor-pointer;
+}
+
+/* ------------------ LOGIN VIEW ----------------- */
+
+.list__item {
+  @apply hover:bg-gray-50 hover:text-orange-400 rounded-md hover:drop-shadow-md hover:shadow-md cursor-pointer px-4 py-2 duration-100;
+}
+
+.list__item-active {
+  @apply bg-gray-50 text-orange-400 drop-shadow-md shadow-md;
+}
+
+/* ---------------- SIGN UP VIEW ---------------- */
+.input__container {
+  @apply w-full flex flex-col justify-center items-start gap-2;
+}
+
+.input__label {
+  @apply text-azul font-bold font-jakarta text-lg drop-shadow-md;
+}
+
+.input__area {
+  @apply w-full font-jakarta placeholder:text-center placeholder:font-jakarta p-2 border border-solid border-azulClaro rounded shadow-md;
+}
+
+.input__area-50 {
+  @apply w-1/2 font-jakarta placeholder:text-center placeholder:font-jakarta p-2 border border-solid border-azulClaro rounded shadow-md;
+}
+
+/* ------------------ MAP VIEW ----------------- */
+.aside__container {
+  @apply flex flex-col justify-center items-center gap-4 bg-brancoAzulado p-8 rounded-xl shadow-md border border-solid border-orange-400 text-gray-700 cursor-pointer hover:bg-orange-300 hover:text-gray-50 duration-100;
+}
+
+.aside__text {
+  @apply font-amatic text-4xl underline underline-offset-8 font-bold text-center;
+}
+
+.map__piece {
+  @apply w-1/4 h-full;
+}
+
+.map__piece-discovered {
+  @apply shadow-xl cursor-pointer;
+}
+
+.map__piece-undiscovered {
+  @apply blur-[0.8px];
+}
+
+.modal__ended,
+.modal__begin,
+.modal__comment {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  @apply rounded-lg w-[60vw] h-[70vh] absolute z-[9999] pt-5 bg-gray-50 flex flex-col justify-start items-center font-jakarta text-gray-700 object-contain font-bold tracking-wide drop-shadow-md;
+}
+/* ---------------- FEEDBACKS VIEW ---------------- */
+.modal__levelContainer {
+  @apply flex flex-row justify-center items-center text-sm font-normal;
+}
+
+.modal__btn-level {
+  @apply flex flex-col justify-center items-center cursor-default;
+}
+
+.modal__btn-level-img {
+  @apply rounded-full border border-solid border-orange-400 w-[80%] hover:bg-azulClaro duration-100 cursor-pointer;
+}
+
+/* ----------------- CHARTS VIEW ----------------- */
+.btn__charts {
+  @apply flex flex-col justify-center items-center border-[2px] border-solid border-orange-500 rounded-full p-2 w-[130px] h-[130px] shadow-xl bg-gray-50 hover:bg-orange-300 hover:text-gray-50 hover:border-azul duration-150;
+}
+
+.btn__charts-active {
+  @apply bg-orange-300 text-gray-50 border-azul -translate-y-2;
+}
+
+.btn__pagination {
+  @apply font-amatic text-azulEscuro text-3xl font-bold bg-gray-50 p-3 rounded-lg shadow-lg;
+}
+
+.btn__pagination-active {
+  @apply text-gray-50 text-4xl underline  bg-orange-400  shadow-xl;
+}
+.container__btns {
+  @apply flex flex-row justify-center items-center gap-4;
+}
+
+/* ------------------ GAME VIEW ----------------- */
+.borders {
+  @apply border-orange-400 border-solid border border-b-0;
+}
+
+.hint--strong {
+  @apply text-5xl font-amatic text-orange-500 font-bold;
+}
+
+.hint--strong-minor {
+  @apply text-2xl font-amatic text-orange-500 font-bold;
+}
+
+.hint__img {
+  @apply w-[17%];
+}
+
+.modal {
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+
+  @apply duration-1000 opacity-0;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: rgb(251, 146, 60);
+  border-radius: 8px;
+  background-size: 35px 20px, 100% 100%, 100% 100%;
+}
