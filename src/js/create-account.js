@@ -3,7 +3,10 @@ class CreateAccount {
   passwordInput = document.querySelector('#input__password');
   passwordConfirmInput = document.querySelector('#input__password-confirm');
   pretendsInput = document.querySelector('#input__pretends');
+  ageInput = document.querySelector('#input__age');
+  nameInput = document.querySelector('#input__name');
   btnSubmit = document.querySelector('#input__submit');
+  spinner = document.querySelector('.loader');
 
   upperCase = [
     'A',
@@ -40,7 +43,9 @@ class CreateAccount {
     email: '',
     password: '',
     passwordConfirm: '',
-    comment: '',
+    initialComment: '',
+    age: '',
+    name: '',
   };
 
   constructor() {
@@ -144,19 +149,21 @@ class CreateAccount {
     setTimeout(() => document.querySelector('.error').remove(), 3000);
   }
 
-  submitAction(event) {
+  async submitAction(event) {
     event.preventDefault();
 
     let email = this.emailInput.value;
     let password = this.passwordInput.value;
     let passwordConfirm = this.passwordConfirmInput.value;
     let comment = this.pretendsInput.value;
+    let name = this.nameInput.value;
+    let age = this.ageInput.value;
 
-    console.log(email, password, passwordConfirm, comment);
-
-    if (!email || !password || !passwordConfirm || !comment) {
+    if (!email || !password || !passwordConfirm || !comment || !name || !age) {
       return this.renderError('Preencha todos os campos');
     }
+
+    name = validator.escape(name);
 
     email = validator.escape(email);
     if (!validator.isEmail(email)) {
@@ -176,41 +183,48 @@ class CreateAccount {
     }
 
     comment = validator.escape(comment);
-    comment = validator.whitelist(comment, [
-      ...this.upperCase,
-      ...this.lowercase,
-      ...this.numbers,
-    ]);
-    console.log(comment);
 
     this.accountData.email = email;
     this.accountData.password = password;
     this.accountData.passwordConfirm = passwordConfirm;
-    this.accountData.comment = comment;
-    console.log(this.accountData);
-    this.renderError('Conta criada com sucesso!');
+    this.accountData.initialComment = comment;
+    this.accountData.name = name;
+    this.accountData.age = age;
+
+    this.spinner.classList.remove('hidden');
+    try {
+      await this.postSignUp();
+      this.spinner.classList.add('hidden');
+      this.renderError('Conta criada com sucesso!');
+      setTimeout(() => (window.location.href = '/src/index.html'), 2000);
+    } catch {}
+  }
+
+  async postSignUp() {
+    try {
+      const response = await fetch(
+        'https://map-of-me-api.onrender.com/api/v1/users/signup',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.accountData),
+        }
+      );
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message);
+
+      console.log(data);
+    } catch (err) {
+      this.spinner.classList.add('hidden');
+
+      this.renderError(err.message);
+
+      throw err;
+    }
   }
 }
 
-const teste = async () => {
-  const response = await fetch(
-    'https://map-of-me-api.onrender.com/api/v1/users/login',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: 'raizer50@gmail.com',
-        password: 'Raizer25091611',
-      }),
-    }
-  );
-
-  console.log(response);
-
-  const data = await response.json();
-  console.log(data);
-};
-teste();
 const createAccount = new CreateAccount();
