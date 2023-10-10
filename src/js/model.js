@@ -99,6 +99,7 @@ export const approveLogin = async function (inputEmail, inputPassword) {
           email: inputEmail,
           password: inputPassword,
         }),
+        credentials: 'include',
       }
     );
 

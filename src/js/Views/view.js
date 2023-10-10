@@ -50,7 +50,7 @@ class View {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
+        credentials: 'same-origin',
       }
     );
     const responseData = await response.json();
