@@ -40,6 +40,21 @@ class View {
       handler();
     });
   }
+
+  async verifyJWT() {
+    const response = await fetch(
+      'https://map-of-me-api.onrender.com/api/v1/users/verifyAuth',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin',
+      }
+    );
+    const responseData = await response.json();
+    if (responseData.verified) return true;
+  }
 }
 
 export default View;

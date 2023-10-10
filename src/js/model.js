@@ -86,18 +86,31 @@ export const state = {
   stopperTimer: '',
 };
 
-export const approveLogin = function (inputEmail, inputPassword) {
-  if (inputEmail === USER.user && inputPassword === USER.password) {
-    state.currentUser.email = USER.user;
-    state.currentUser.name = USER.name;
-    state.currentUser.id = USER.id;
+export const approveLogin = async function (inputEmail, inputPassword) {
+  try {
+    const response = await fetch(
+      'https://map-of-me-api.onrender.com/api/v1/users/login',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: inputEmail,
+          password: inputPassword,
+        }),
+      }
+    );
+
+    const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.message);
+    state.currentUser = responseData.data.user;
 
     state.isLogged = true;
 
     return state;
-  }
-  if (inputEmail !== USER.user || inputPassword === USER.password) {
-    return state;
+  } catch (err) {
+    throw err;
   }
 };
 

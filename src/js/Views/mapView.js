@@ -138,13 +138,15 @@ class="main w-screen min-h-screen bg-gray-50 flex flex-col justify-evenly items-
 `;
   }
 
-  renderHTML(component, data) {
-    this._clearParentElement();
-    this._data = data;
+  async renderHTML(component, data) {
+    if (await this.verifyJWT()) {
+      this._clearParentElement();
+      this._data = data;
 
-    this._body.insertAdjacentHTML('beforeend', component);
-    this.renderBeginModal();
-    this._verifyEndGame();
+      this._body.insertAdjacentHTML('beforeend', component);
+      this.renderBeginModal();
+      this._verifyEndGame();
+    }
   }
 
   generateBeginModal() {

@@ -8,17 +8,17 @@ import { instanceView } from './Views/view.js';
 
 import loginView from './Views/loginView.js';
 
-const controlLogin = function () {
+const controlLogin = async function () {
   const [email, password] = loginView.getInputValues();
 
-  model.approveLogin(email, password);
-
-  if (!model.state.isLogged) {
-    return loginView.renderError();
-  } else {
+  try {
+    await model.approveLogin(email, password);
     model.changeHash();
-    console.log(model.state);
+  } catch (err) {
+    throw err;
   }
+
+  console.log(model.state);
 };
 
 const controlHashChange = function () {

@@ -43,7 +43,7 @@ class LoginPage extends View {
           </h3>
         </div>
       </div>
-      <div class="flex flex-col justify-center items-start w-[50%]">
+      <div class="flex flex-col justify-center items-start w-[50%] form__inputs">
         <label for="input__text" class="font-jakarta text-laranja text-xl"
           >Usuário:</label
         >
@@ -56,7 +56,7 @@ class LoginPage extends View {
           maxlength="20"
         />
       </div>
-      <div class="flex flex-col justify-center items-start w-[50%]">
+      <div class="flex flex-col justify-center items-start w-[50%] form__inputs">
         <label for="input__password" class="font-jakarta text-laranja text-xl"
           >Senha:</label
         >
@@ -69,6 +69,7 @@ class LoginPage extends View {
           maxlength="20"
         />
       </div>
+      <div class="loader hidden"></div>
     
       <button
         type="submit"
@@ -108,9 +109,9 @@ class LoginPage extends View {
     this._inputEmail.focus();
   }
 
-  renderError() {
+  renderError(errMessage) {
     const btn = this._parentElement.querySelector('.form__btn');
-    const errorHTML = this.generateErrorHTML();
+    const errorHTML = this.generateErrorHTML(errMessage);
     btn.insertAdjacentHTML('beforebegin', errorHTML);
     this._clearInputs();
     setTimeout(() => {
@@ -118,22 +119,35 @@ class LoginPage extends View {
     }, 5000);
   }
 
-  generateErrorHTML() {
+  generateErrorHTML(errMessage) {
     return `
     <div
     class="font-jakarta text-red-400 flex flex-col justify-center items-center"
   >
-    <p>Usuário ou senha incorretos!</p>
-    <p>Tente novamente.</p>
+    <p>${errMessage}</p>
   </div>
     `;
   }
 
+  _toggleInputsView(state) {
+    const inputs = [...document.querySelectorAll('.form__inputs')];
+    const loader = document.querySelector('.loader');
+    inputs.forEach((input) => (input.style.display = state ? 'flex' : 'none'));
+    loader.style.display = state ? 'none' : 'block';
+  }
+
   addHandlerLogin(handler) {
-    this._parentElement.addEventListener('click', (event) => {
+    this._parentElement.addEventListener('click', async (event) => {
       event.preventDefault();
       if (!event.target.classList.contains('form__btn')) return;
-      handler();
+      try {
+        this._toggleInputsView(false);
+        await handler();
+        this._toggleInputsView(true);
+      } catch (err) {
+        this._toggleInputsView(true);
+        this.renderError(err.message);
+      }
     });
   }
 }
