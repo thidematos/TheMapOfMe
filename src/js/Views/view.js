@@ -46,10 +46,11 @@ class View {
       'https://map-of-me-api.onrender.com/api/v1/users/verifyAuth',
       {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'same-origin',
+        credentials: 'include',
       }
     );
     const responseData = await response.json();
