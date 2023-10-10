@@ -42,19 +42,14 @@ class View {
   }
 
   async verifyJWT() {
-    const response = await fetch(
-      'https://map-of-me-api.onrender.com/api/v1/users/verifyAuth',
-      {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin',
-      }
-    );
-    const responseData = await response.json();
-    if (responseData.verified) return true;
+    const response = await axios({
+      method: 'POST',
+      url: 'https://map-of-me-api.onrender.com/api/v1/users/verifyAuth',
+      withCredentials: true,
+    });
+
+    console.log(response);
+    if (response.verified) return true;
   }
 }
 

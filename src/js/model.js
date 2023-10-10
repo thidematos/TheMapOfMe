@@ -88,24 +88,21 @@ export const state = {
 
 export const approveLogin = async function (inputEmail, inputPassword) {
   try {
-    const response = await fetch(
-      'https://map-of-me-api.onrender.com/api/v1/users/login',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: inputEmail,
-          password: inputPassword,
-        }),
-        credentials: 'include',
-      }
-    );
+    const responseData = await axios({
+      url: 'https://map-of-me-api.onrender.com/api/v1/users/login',
+      method: 'POST',
+      data: {
+        email: inputEmail,
+        password: inputPassword,
+      },
+      withCredentials: true,
+    });
+    console.log(responseData);
 
-    const responseData = await response.json();
-    if (!response.ok) throw new Error(responseData.message);
-    state.currentUser = responseData.data.user;
+    if (!responseData.statusText === 'OK')
+      throw new Error(responseData.message);
+    state.currentUser = responseData.data.data.user;
+    console.log(state.currentUser);
 
     state.isLogged = true;
 
