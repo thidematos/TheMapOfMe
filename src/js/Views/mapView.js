@@ -139,7 +139,9 @@ class="main w-screen min-h-screen bg-gray-50 flex flex-col justify-evenly items-
   }
 
   async renderHTML(component, data) {
-    if (await this.verifyJWT()) {
+    const isAuthenticated = await this.verifyJWT();
+    console.log(isAuthenticated);
+    if (isAuthenticated) {
       this._clearParentElement();
       this._data = data;
 

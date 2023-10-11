@@ -203,7 +203,7 @@ class CreateAccount {
   async postSignUp() {
     try {
       const response = await fetch(
-        'https://map-of-me-api.onrender.com/api/v1/users/signup',
+        'http://127.0.0.1:3000/api/v1/users/signup',
         {
           method: 'POST',
           headers: {

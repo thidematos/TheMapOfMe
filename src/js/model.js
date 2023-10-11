@@ -1,87 +1,7 @@
 import { USER } from './config.js';
 
 export const state = {
-  isLogged: false,
-  currentUser: {
-    name: '',
-    email: '',
-    id: '',
-    feedbacks: {
-      hasFeedback: false,
-      feedbacks: [],
-    },
-
-    levels: {
-      mapOne: {
-        completed: false,
-        focusTime: '',
-        wrongMoves: '',
-        durationToComplete: '',
-        hints: '',
-      },
-      mapTwo: {
-        completed: false,
-        focusTime: '',
-        wrongMoves: '',
-        durationToComplete: '',
-        hints: '',
-      },
-      mapThree: {
-        completed: false,
-        focusTime: '',
-        wrongMoves: '',
-        durationToComplete: '',
-        hints: '',
-      },
-      mapFour: {
-        completed: false,
-        focusTime: '',
-        wrongMoves: '',
-        durationToComplete: '',
-        hints: '',
-      },
-      mapFive: {
-        completed: false,
-        focusTime: '',
-        wrongMoves: '',
-        durationToComplete: '',
-        hints: '',
-      },
-      mapSix: {
-        completed: false,
-        focusTime: '',
-        wrongMoves: '',
-        durationToComplete: '',
-        hints: '',
-      },
-      mapSeven: {
-        completed: false,
-        focusTime: '',
-        wrongMoves: '',
-        durationToComplete: '',
-        hints: '',
-      },
-      mapEight: {
-        completed: false,
-        focusTime: '',
-        wrongMoves: '',
-        durationToComplete: '',
-        hints: '',
-      },
-    },
-    toWin: {
-      mapOne: false,
-      mapTwo: false,
-      mapThree: false,
-      mapFour: false,
-      mapFive: false,
-      mapSix: false,
-      mapSeven: false,
-      mapEight: false,
-    },
-    alreadyEnded: false,
-    alreadyBegin: false,
-  },
+  currentUser: {},
   currentHash: '',
   stopperTimer: '',
 };
@@ -89,7 +9,7 @@ export const state = {
 export const approveLogin = async function (inputEmail, inputPassword) {
   try {
     const responseData = await axios({
-      url: 'https://map-of-me-api.onrender.com/api/v1/users/login',
+      url: 'http://127.0.0.1:3000/api/v1/users/login',
       method: 'POST',
       data: {
         email: inputEmail,
@@ -104,8 +24,6 @@ export const approveLogin = async function (inputEmail, inputPassword) {
     state.currentUser = responseData.data.data.user;
     console.log(state.currentUser);
 
-    state.isLogged = true;
-
     return state;
   } catch (err) {
     throw err;
@@ -113,33 +31,44 @@ export const approveLogin = async function (inputEmail, inputPassword) {
 };
 
 export const changeHash = function (hash = 'adventure-map') {
-  if (!state.isLogged) return;
   location.hash = `#${hash}`;
   state.currentHash = hash;
-  console.log(state);
   return state;
 };
 
-export const getResults = function (data) {
-  state.currentUser.levels[data.id].completed = true;
-  state.currentUser.levels[data.id].focusTime = Number(
-    data.data.focusTime.toFixed(2)
-  );
-  state.currentUser.levels[data.id].wrongMoves = data.data.wrongMoves;
-  state.currentUser.levels[data.id].durationToComplete = data.data.completeTime;
-  state.currentUser.levels[data.id].hints = data.data.hints;
+export const getResults = async function (data) {
+  const updatedUser = await axios({
+    url: `http://127.0.0.1:3000/api/v1/users/${state.currentUser._id}`,
+    method: 'PATCH',
+    data: {
+      puzzleID: data.id,
+      data: {
+        focusTime: Number(data.data.focusTime.toFixed(2)),
+        wrongMoves: data.data.wrongMoves,
+        completeTime: data.data.completeTime,
+        hints: data.data.hints,
+      },
+    },
+    withCredentials: true,
+  });
+  console.log(updatedUser);
 
-  state.currentUser.toWin[data.id] = true;
-
-  if (state.currentUser.toWin) console.log(state);
+  state.currentUser = updatedUser.data.data.user;
 };
 
 export const changeStateEndGame = function () {
   return (state.currentUser.alreadyEnded = true);
 };
 
-export const changeStateBegin = function () {
-  return (state.currentUser.alreadyBegin = true);
+export const changeStateBegin = async function () {
+  await axios({
+    url: `http://127.0.0.1:3000/api/v1/users/${state.currentUser._id}`,
+    method: 'PATCH',
+    data: {
+      alreadyBegin: true,
+    },
+    withCredentials: true,
+  });
 };
 
 export const changeReviewStatus = function (event) {

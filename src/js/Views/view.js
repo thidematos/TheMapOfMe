@@ -1,5 +1,5 @@
-const prodFetch = 'https://map-of-me-api.onrender.com/api/v1/users/';
-const devFetch = 'http://127.0.0.1:3000/api/v1/users/';
+const prodFetch = 'https://map-of-me-api.onrender.com/api/v1/users';
+const devFetch = 'http://127.0.0.1:3000/api/v1/users';
 
 class View {
   _data;
@@ -47,12 +47,11 @@ class View {
   async verifyJWT() {
     const response = await axios({
       method: 'POST',
-      url: 'https://map-of-me-api.onrender.com/api/v1/users/verifyAuth',
+      url: devFetch + '/verifyAuth',
       withCredentials: true,
     });
-
-    console.log(response);
-    if (response.verified) return true;
+    if (!response.data.verified) return false;
+    return true;
   }
 }
 

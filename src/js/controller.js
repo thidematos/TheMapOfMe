@@ -21,21 +21,24 @@ const controlLogin = async function () {
   console.log(model.state);
 };
 
-const controlHashChange = function () {
+const controlHashChange = async function () {
   const currentHash = model.state.currentHash;
   console.log(`It works! Hash: ${model.state.currentHash}`);
   const index = HASHS.findIndex((hash) => hash === currentHash);
   const currentView = VIEWS[index];
-  currentView.renderHTML([currentView.generateHTML(model.state)], model.state);
+  await currentView.renderHTML(
+    [currentView.generateHTML(model.state)],
+    model.state
+  );
   currentView.addGetHash(model.changeHash);
 };
 
 const init = function () {
-  model.changeHash('login');
+  // model.changeHash('login');
   instanceView.addHandlerChangeHash(controlHashChange);
   loginView.addHandlerLogin(controlLogin);
-  window.addEventListener('victory', (event) => {
-    model.getResults(event.detail);
+  window.addEventListener('victory', async (event) => {
+    await model.getResults(event.detail);
   });
 
   window.addEventListener('ended', (event) => {
