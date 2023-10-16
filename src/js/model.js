@@ -56,8 +56,19 @@ export const getResults = async function (data) {
   state.currentUser = updatedUser.data.data.user;
 };
 
-export const changeStateEndGame = function () {
-  return (state.currentUser.alreadyEnded = true);
+export const changeStateEndGame = async function () {
+  const updatedUser = await axios({
+    url: `http://127.0.0.1:3000/api/v1/users/${state.currentUser._id}`,
+    method: 'PATCH',
+    data: {
+      alreadyEnded: true,
+    },
+    withCredentials: true,
+  });
+
+  state.currentUser = updatedUser.data.data.user;
+
+  console.log(state);
 };
 
 export const changeStateBegin = async function () {
@@ -71,8 +82,21 @@ export const changeStateBegin = async function () {
   });
 };
 
-export const changeReviewStatus = function (event) {
-  state.currentUser.feedbacks.hasFeedback = true;
-  state.currentUser.feedbacks.feedbacks.push(event.detail);
+export const changeReviewStatus = async function (event) {
+  const updatedUser = await axios({
+    url: `http://127.0.0.1:3000/api/v1/users/${state.currentUser._id}`,
+    method: 'PATCH',
+    data: {
+      hasFeedback: true,
+      title: event.detail.title,
+      level: event.detail.level,
+      description: event.detail.description,
+      rating: event.detail.rating,
+    },
+    withCredentials: true,
+  });
+
+  state.currentUser = updatedUser.data.data.user;
+
   console.log(state);
 };

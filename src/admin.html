@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia da Aventura!</title>
+    <link rel="stylesheet" href="./../dist/output.css" />
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon" />
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+    ></script>
+    <script defer type="module" src="js/admin.js"></script>
+  </head>
+  <body
+    class="min-h-screen w-screen bg-gray-100 flex flex-col justify-center items-center"
+  >
+    <main class="flex flex-col justify-center items-center">
+      <div
+        class="bg-brancoAzulado p-16 flex flex-col justify-center items-center rounded-lg shadow-lg gap-12 h-[70vh]"
+      >
+        <div class="flex flex-row justify-around items-center w-full">
+          <img src="assets/logo300.png" alt="" class="w-[40%]" />
+          <div class="flex flex-col justify-center items-center gap-3">
+            <h1 class="font-amatic text-5xl text-azulEscuro font-bold">
+              The Map of Me!
+            </h1>
+            <h2 class="font-jakarta text-lg tracking-wider text-gray-700">
+              Guia da aventura!
+            </h2>
+          </div>
+        </div>
+        <form
+          action=""
+          class="input__form w-full flex flex-col justify-center items-center gap-4"
+        >
+          <div class="flex flex-col justify-center items-start gap-2 w-[60%]">
+            <label
+              class="font-jakarta text-xl text-orange-400"
+              for="input__admin-user"
+              >Guia:</label
+            >
+            <input class="input__area" type="text" id="input__admin-user" />
+          </div>
+          <div class="flex flex-col justify-center items-start gap-2 w-[60%]">
+            <label
+              class="font-jakarta text-xl text-orange-400"
+              for="input__admin-password"
+              >Senha:</label
+            >
+            <input
+              class="input__area"
+              type="password"
+              id="input__admin-password"
+            />
+          </div>
+          <button
+            type="submit"
+            class="input__btn font-amatic text-4xl bg-orange-400 p-4 rounded-lg text-gray-50 font-bold drop-shadow shadow-lg hover:bg-azul hover:underline mt-6"
+          >
+            Entrar!
+          </button>
+        </form>
+        <div class="loader hidden"></div>
+        <p
+          class="hidden error__message bg-orange-200 p-3 font-jakarta text-gray-700 shadow-lg tracking-wider"
+        >
+          ERRO ERRO ERRO ERRO
+        </p>
+      </div>
+    </main>
+    <footer
+      class="absolute bottom-0 w-screen bg-brancoAzulado h-[5vh] flex flex-row justify-center items-center font-amatic text-gray-800 text-3xl"
+    >
+      <a href="index.html">The Map of Me</a>
+    </footer>
+  </body>
+</html>

@@ -83,7 +83,7 @@ class LoginPage extends View {
     <footer
     class="w-screen bg-brancoAzulado h-[5vh] flex flex-row justify-center items-center font-amatic text-gray-800 text-3xl"
     >
-    The Map of Me
+    <a href="admin.html">The Map of Me</a>
     </footer>
     `;
   }
@@ -145,8 +145,9 @@ class LoginPage extends View {
         await handler();
         this._toggleInputsView(true);
       } catch (err) {
+        console.log(err);
         this._toggleInputsView(true);
-        this.renderError(err.message);
+        this.renderError(err.response.data.message);
       }
     });
   }

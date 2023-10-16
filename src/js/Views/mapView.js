@@ -133,6 +133,7 @@ class="main w-screen min-h-screen bg-gray-50 flex flex-col justify-evenly items-
     <img src="assets/notebook.png" alt="" />
     <h3 class="aside__text">Caderno de lembranças!</h3>
   </div>
+  <a href="index.html" class="font-amatic text-3xl text-azul absolute bottom-10 right-52 bg-orange-300 p-4 border-solid border-azulClaro rounded border underline hover:bg-azul hover:text-gray0 decoration-1 font-bold">Sair!</a>
 </section>
 </main>
 `;

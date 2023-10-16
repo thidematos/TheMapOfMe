@@ -404,18 +404,21 @@ class FeedbackView extends View {
     `;
   }
 
-  renderHTML(component, data) {
-    this._clearParentElement();
-    this._data = data;
+  async renderHTML(component, data) {
+    const isAuthenticated = await this.verifyJWT();
+    if (isAuthenticated) {
+      this._clearParentElement();
+      this._data = data;
 
-    this._body.insertAdjacentHTML('beforeend', component);
+      this._body.insertAdjacentHTML('beforeend', component);
 
-    if (data.currentUser.feedbacks.hasFeedback) {
-      document.querySelector('.comment__container').innerHTML = '';
-      data.currentUser.feedbacks.feedbacks.forEach((feedback) => {
-        this._crudData = feedback;
-        this._renderItem();
-      });
+      if (data.currentUser.feedbacks.hasFeedbacks) {
+        document.querySelector('.comment__container').innerHTML = '';
+        data.currentUser.feedbacks.feedbacks.forEach((feedback) => {
+          this._crudData = feedback;
+          this._renderItem();
+        });
+      }
     }
 
     //Start scripts here
@@ -567,6 +570,7 @@ class FeedbackView extends View {
       '!',
       '?',
       '.',
+      ' ',
     ]);
     this._crudData.title = data;
   }
