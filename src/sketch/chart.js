@@ -1,17 +1,24 @@
-let ctx = document.getElementById('chart').getContext('2d');
+/*
+const ctx = document.getElementById('myChart');
 
-let chart = new Chart(ctx, {
-  type: 'line',
-
+new Chart(ctx, {
+  type: 'bar',
   data: {
-    labels: ['january', 'february', 'march', 'april', 'may', 'june', 'july'],
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [
       {
-        label: 'My first dataset',
-        data: [0, 10, 5, 2, 20, 30, 45],
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1,
       },
     ],
   },
-
-  options: {},
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  },
 });
+*/

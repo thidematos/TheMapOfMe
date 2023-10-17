@@ -1,3 +1,5 @@
+import AdminDashboard from './adminDashboard.js';
+
 class App {
   _crud = {
     user: '',
@@ -10,6 +12,37 @@ class App {
   loader = document.querySelector('.loader');
 
   errorDiv = document.querySelector('.error__message');
+
+  notAuthHTML = `<main
+  class="min-h-screen w-screen bg-gray-100 flex flex-col justify-center items-center"
+>
+  <div
+    class="flex flex-row justify-evenly items-center h-[60vh] bg-brancoAzulado w-[50vw] rounded-lg shadow-lg bg-logo bg-no-repeat bg-center bg-50"
+  >
+    <img
+      src="./assets/sad-adventurer.png"
+      alt=""
+      class="border-2 border-solid border-orange-400 rounded-lg shadow-lg drop-shadow bg-azulClaro p-4 w-[20%]"
+    />
+    <div class="flex flex-col justify-center items-center gap-4">
+      <h2 class="font-amatic text-6xl text-gray-700">Aaaah... Que pena!</h2>
+      <h1 class="font-jakarta text-lg text-gray-700 tracking-wider">
+        Infelizmente, você não pode aventurar por esse caminho!
+      </h1>
+      <h2 class="error__message font-jakarta text-gray-700 tracking-wider">
+        ERROR MESSAGE
+      </h2>
+      <a
+        href="index.html"
+        class="font-amatic bg-azulEscuro text-gray-50 p-3 text-4xl rounded shadow-lg hover:underline drop-shadow hover:bg-orange-400"
+      >
+        Voltar!
+      </a>
+    </div>
+  </div>
+</main>`;
+
+  currentUser = {};
 
   constructor() {
     this._addEventListeners();
@@ -29,7 +62,7 @@ class App {
 
   async _login() {
     try {
-      const response = await axios({
+      const currentUser = await axios({
         url: `http://127.0.0.1:3000/api/v1/users/login`,
         method: 'POST',
         data: {
@@ -38,6 +71,8 @@ class App {
         },
         withCredentials: true,
       });
+      this.currentUser = currentUser.data.data.user;
+      console.log(this.currentUser);
       this._toggleLoader();
       this._renderAdminView();
     } catch (err) {
@@ -50,15 +85,23 @@ class App {
   async _renderAdminView() {
     try {
       const response = await axios({
-        url: `http://127.0.0.1:3000/api/v1/users/adminView`,
+        url: `http://127.0.0.1:3000/api/v1/users/adminView/adminView`,
         method: 'GET',
         withCredentials: true,
       });
-      document.querySelector('body').innerHTML = '';
-      document
-        .querySelector('body')
-        .insertAdjacentHTML('beforeend', response.data.data.html);
-    } catch (err) {}
+
+      this._clearAndInsertHTML(response.data.data.html);
+      const dashboard = new AdminDashboard(this.currentUser);
+    } catch (err) {
+      console.log(err.response.data.message);
+      this._clearAndInsertHTML(this.notAuthHTML);
+    }
+  }
+
+  _clearAndInsertHTML(html) {
+    const body = document.querySelector('body');
+    body.innerHTML = '';
+    body.insertAdjacentHTML('beforeend', html);
   }
 
   _clearInputs() {

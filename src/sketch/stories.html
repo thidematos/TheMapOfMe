@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./../../dist/output.css" />
+    <script
+      defer
+      src="./../../node_modules/chart.js/dist/chart.umd.js"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/1d41b3ab2c.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="./chart.js"></script>
+  </head>
+  <body
+    class="min-h-screen w-screen bg-gray-100 flex flex-col justify-center items-center"
+  >
+    <main class="flex flex-col justify-center gap-20 items-center">
+      <button class="back__button">Voltar!</button>
+      <header class="flex flex-row justify-center items-center gap-16">
+        <img src="./../assets/logo300.png" alt="" />
+        <div
+          class="flex flex-col justify-center items-center tracking-wider text-gray-700 gap-4"
+        >
+          <h1 class="font-amatic text-6xl text-azulEscuro">
+            Relatos de nossos exploradores
+          </h1>
+          <div
+            class="flex flex-col justify-center items-center font-jakarta text-lg"
+          >
+            <p class="">
+              Veja os relatos iniciais de nossos pequenos exploradores e seus
+              responsáveis.
+            </p>
+            <p class="">
+              Esses relatos foram cedidos no momento de criação de seu usuário.
+            </p>
+          </div>
+        </div>
+      </header>
+      <section class="story__container w-full h-full">
+        <div class="story__card">
+          <div class="flex flex-row justify-center gap-12 items-center w-full">
+            <h3 class="story__text-age">Idade: 11</h3>
+            <img src="./../assets/btnOne.png" alt="" class="story__text-img" />
+          </div>
+          <p class="story__text-story">%STORY%</p>
+          <p class="story__text-timestamp">%TIMESTAMP%</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

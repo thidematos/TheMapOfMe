@@ -3,10 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Guia - Dashboard</title>
     <link rel="stylesheet" href="./../../dist/output.css" />
+    <link
+      rel="shortcut icon"
+      href="./../assets/favicon.ico"
+      type="image/x-icon"
+    />
+    <script defer type="module" src="./../js/adminDashboard.js"></script>
   </head>
-  <body>
-    <h1 class="text-red-600">OI OI OI OI</h1>
+  <body class="min-h-screen w-screen flex flex-col justify-center items-center">
+    <main class="flex flex-col justify-center items-center gap-24 w-full">
+      <header class="flex flex-row justify-center item w-full gap-24 mt-16">
+        <img src="./../assets/logo300.png" alt="" class="w-[15%]" />
+        <div class="flex flex-col justify-center items-center gap-5">
+          <h2
+            class="guideName font-jakarta text-3xl tracking-wider text-gray-800"
+          >
+            Bem vindo novamente, %GUIA_NAME%!
+          </h2>
+          <h3
+            class="font-amatic text-4xl font-bold text-gray-800 tracking-wider"
+          >
+            Qual caminho seguiremos?
+          </h3>
+        </div>
+        <a
+          class="font-amatic text-3xl bg-azulClaro text-gray-50 p-4 absolute rounded-lg shadow drop-shadow-lg hover:underline decoration-2 hover:bg-orange-300 right-[2%] top-[2%]"
+          href="index.html"
+          >Sair!</a
+        >
+      </header>
+      <section
+        class="dashboard__button-container flex flex-row justify-evenly items-center w-full"
+      >
+        <div class="dashboard__button" data-hash="Statistics">
+          <img
+            src="./../assets/not-found.png"
+            alt=""
+            class="dashboard__button-img"
+          />
+          <p class="dashboard__button-text">Estatística</p>
+        </div>
+        <div class="dashboard__button" data-hash="Feedbacks">
+          <img
+            src="./../assets/btnEight.png"
+            alt=""
+            class="dashboard__button-img"
+          />
+          <p class="dashboard__button-text">Feedbacks</p>
+        </div>
+        <div class="dashboard__button" data-hash="Stories">
+          <img
+            src="./../assets/btnFour.png"
+            alt=""
+            class="dashboard__button-img"
+          />
+          <p class="dashboard__button-text">Relatos</p>
+        </div>
+      </section>
+    </main>
+    <div class="loader hidden"></div>
   </body>
 </html>

@@ -57,6 +57,43 @@
   }
 }
 
+/* --------------- DASHBOARD VIEW -------------- */
+.dashboard__button {
+  @apply flex flex-col justify-center items-center bg-azulClaro p-8 rounded-lg shadow-lg border-2 border-solid border-orange-300 w-[20%] cursor-pointer h-[35vh] gap-8 hover:bg-orange-300 hover:underline hover:border-azulClaro decoration-gray-50 decoration-2;
+}
+
+.dashboard__button-img {
+  @apply rounded-full border-2 border-solid border-orange-300 bg-brancoAzulado drop-shadow shadow;
+}
+
+.dashboard__button-text {
+  @apply font-amatic text-4xl text-gray-50 tracking-wider font-bold;
+}
+
+.back__button {
+  @apply absolute font-amatic text-gray-50 bg-azulEscuro p-4 rounded-lg text-3xl font-bold hover:bg-orange-300 hover:underline decoration-2 border-2 border-solid border-orange-400 shadow-lg drop-shadow hover:border-azulEscuro duration-300 top-[2%] left-[1%];
+}
+
+.story__card {
+  @apply flex flex-col justify-start items-center w-[30%] h-[35vh] tracking-wide gap-6 bg-brancoAzulado p-10 rounded-lg shadow-lg text-gray-800 overflow-y-scroll;
+}
+
+.story__text-age {
+  @apply font-amatic text-3xl font-bold text-orange-400 drop-shadow;
+}
+
+.story__text-img {
+  @apply w-[30%] border-2 border-solid border-orange-300 rounded-full shadow-lg bg-azulClaro;
+}
+
+.story__text-story {
+  @apply indent-8 text-justify font-jakarta text-sm drop-shadow-sm;
+}
+
+.story__text-timestamp {
+  @apply font-jakarta text-sm drop-shadow-sm;
+}
+
 /* ------------------ MAP VIEW ----------------- */
 .aside__container {
   @apply flex flex-col justify-center items-center gap-4 bg-brancoAzulado p-8 rounded-xl shadow-md border border-solid border-orange-400 text-gray-700 cursor-pointer hover:bg-orange-300 hover:text-gray-50 duration-100;
