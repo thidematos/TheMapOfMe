@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./../../dist/output.css" />
+    <script
+      defer
+      src="./../../node_modules/chart.js/dist/chart.umd.js"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/1d41b3ab2c.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="./chart.js"></script>
+  </head>
+  <body
+    class="min-h-screen w-screen bg-gray-100 flex flex-col justify-center items-center"
+  >
+    <div class="feedbacks__modal" style="display: none">
+      <div class="w-[25%] flex flex-col justify-center items-center gap-10">
+        <img
+          src="./../assets/nice-landscape.png"
+          alt=""
+          class="w-full drop-shadow-lg"
+        />
+        <p
+          class="font-amatic text-3xl text-center text-gray-800 drop-shadow-lg"
+        >
+          Toda aventura tem sua história...
+        </p>
+      </div>
+      <div
+        class="w-[75%] h-full flex flex-col justify-start items-center gap-8"
+      >
+        <h2 class="font-amatic text-5xl text-orange-400 font-bold">%USER%</h2>
+        <div
+          class="flex flex-row justify-center items-start flex-wrap w-full h-full gap-6 overflow-y-scroll"
+        >
+          <div
+            class="bg-azulClaro p-6 rounded-lg shadow-md w-[40%] h-[60%] flex flex-col justify-center items-center gap-3 overflow-y-scroll text-gray-700 font-jakarta"
+          >
+            <h3
+              class="text-lg tracking-wider font-bold text-gray-100 drop-shadow-sm"
+            >
+              %TITLE%
+            </h3>
+            <img
+              src="./../assets/btnOne.png"
+              alt=""
+              class="w-[40%] border-2 border-solid border-orange-400 rounded-full drop-shadow"
+            />
+            <p class="tracking-wide">%FEEDBACK%</p>
+            <div>
+              <i class="fa-solid fa-star text-yellow-400"></i>
+            </div>
+            <h4>%TIMESTAMP%</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feedbacks__modal-cover" style="display: none"></div>
+    <main class="flex flex-col justify-center gap-20 items-center">
+      <button class="back__button">Voltar!</button>
+      <header class="flex flex-row justify-center items-center gap-16">
+        <img src="./../assets/logo300.png" alt="" />
+        <div
+          class="flex flex-col justify-center items-center tracking-wider text-gray-700 gap-4"
+        >
+          <h1 class="font-amatic text-6xl text-azulEscuro">
+            Feedbacks de nossos exploradores
+          </h1>
+          <div
+            class="flex flex-col justify-center items-center font-jakarta text-lg"
+          >
+            <p class="">Veja os feedbacks feitos pelos nossos exploradores!</p>
+            <p class="">
+              Esses feedbacks estão organizados por cada explorador.
+            </p>
+          </div>
+        </div>
+      </header>
+      <section class="feedbacks__container w-full h-full">
+        <div
+          data-id="%ID%"
+          class="feedbacks__card"
+          style="height: fit-content; overflow: visible"
+        >
+          <img src="./../assets/btnOne.png" alt="" />
+          <h2
+            class="font-amatic font-bold text-3xl text-orange-400 drop-shadow"
+          >
+            %NAME%
+          </h2>
+          <div
+            class="flex flex-col justify-center items-center gap-1 font-jakarta text-gray-800"
+          >
+            <h3 class="font-jakarta text-gray-800">%AGE%</h3>
+            <h4>%LAST_FEEDBACK%</h4>
+            <h5>
+              <i class="fa-solid fa-star text-yellow-400"></i>: %AVG_RATING%
+            </h5>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -35,6 +35,7 @@ class AdminDashboard {
   createHashChangeListener() {
     window.addEventListener('hashchange', () => {
       const hashID = window.location.hash.replace('#', '');
+      if (!hashID) return;
       const currentDashboard = new dashboards[hashID](hashID);
     });
   }

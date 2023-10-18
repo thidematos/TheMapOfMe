@@ -74,8 +74,9 @@
   @apply absolute font-amatic text-gray-50 bg-azulEscuro p-4 rounded-lg text-3xl font-bold hover:bg-orange-300 hover:underline decoration-2 border-2 border-solid border-orange-400 shadow-lg drop-shadow hover:border-azulEscuro duration-300 top-[2%] left-[1%];
 }
 
-.story__card {
-  @apply flex flex-col justify-start items-center w-[30%] h-[35vh] tracking-wide gap-6 bg-brancoAzulado p-10 rounded-lg shadow-lg text-gray-800 overflow-y-scroll;
+.story__card,
+.feedbacks__card {
+  @apply flex flex-col justify-start items-center w-[30%] h-[30vh] tracking-wide gap-6 bg-brancoAzulado p-10 rounded-lg shadow-lg text-gray-800 overflow-y-scroll;
 }
 
 .story__text-age {
@@ -90,8 +91,22 @@
   @apply indent-8 text-justify font-jakarta text-sm drop-shadow-sm;
 }
 
+.story__container,
+.feedbacks__container {
+  @apply flex flex-row flex-wrap justify-center items-center gap-12;
+}
+
 .story__text-timestamp {
   @apply font-jakarta text-sm drop-shadow-sm;
+}
+
+.feedbacks__modal {
+  @apply z-[9999] w-[60vw] bg-gray-100 border-2 border-solid border-orange-300 h-[70vh] absolute rounded-lg shadow-md flex flex-row justify-around items-center
+p-10 gap-16;
+}
+
+.feedbacks__modal-cover {
+  @apply w-screen h-screen bg-[rgba(55,65,81,0.72)] absolute z-[9998];
 }
 
 /* ------------------ MAP VIEW ----------------- */
