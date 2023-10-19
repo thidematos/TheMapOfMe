@@ -95,7 +95,183 @@ class DashboardView {
 export class Statistics extends DashboardView {
   constructor() {
     super();
-    console.log('Statistics');
+  }
+
+  async init(hash) {
+    this.hash = hash;
+    this._renderSpinner();
+    await this.auth();
+    this._getContainers();
+    this._addClickFirstOption();
+    this._addClickLevel();
+  }
+
+  async _getLevelData(level) {
+    const response = await axios({
+      method: 'GET',
+      url: `http://127.0.0.1:3000/api/v1/users/statistics/levels/${level}`,
+      withCredentials: true,
+    });
+
+    this._renderBarChart(response.data.data.statistics[0], level);
+  }
+
+  _clearCanvas(currentChart) {
+    this._chartContainer.innerHTML = '';
+
+    const html = `<canvas id="${currentChart}" class=" border-2 border-solid border-orange-300 rounded-lg shadow-xl bg-gray-50">
+    </canvas>`;
+
+    this._chartContainer.insertAdjacentHTML('beforeend', html);
+
+    return document.querySelector(`#${currentChart}`);
+  }
+
+  _configChart() {
+    Chart.defaults.font = {
+      size: 14,
+      family: 'Plus Jakarta Sans',
+    };
+  }
+
+  _renderErrorCanvas() {
+    this._toggleButtonsContainer(this._chartContainer, false);
+    this._toggleButtonsContainer(this._errorContainer, true);
+  }
+
+  _renderBarChart(data, currentChart) {
+    const averages = data;
+
+    if (!averages) return this._renderErrorCanvas();
+
+    this._toggleButtonsContainer(this._errorContainer, false);
+    this._configChart();
+
+    let currentCanvas = this._clearCanvas(currentChart);
+
+    this._toggleButtonsContainer(this._chartContainer, true);
+
+    currentCanvas = currentCanvas.getContext('2d');
+    const chart = new Chart(currentCanvas, {
+      type: 'bar',
+
+      data: {
+        labels: [
+          'Tempo de foco (segundos)',
+          'Tempo de montagem (segundos)',
+          'Movimentos errados',
+          'Dicas usadas',
+        ],
+        datasets: [
+          {
+            label: `Média Geral: ${averages.numOfUsersData} exploradores`,
+            data: [
+              averages.avgFocusTime,
+              averages.avgDurationToComplete,
+              averages.avgWrongMoves,
+              averages.avgHints,
+            ],
+            backgroundColor: 'rgb(34,139,230)',
+            borderRadius: '8',
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Desempenho médio de todos os jogadores',
+            font: {
+              family: 'Plus Jakarta Sans',
+              size: 24,
+            },
+          },
+        },
+        layout: {
+          padding: 10,
+        },
+      },
+    });
+    this._toggleButtonsContainer(this._infoContainer, false);
+  }
+
+  _addClickFirstOption() {
+    this._firstContainer.addEventListener('click', (event) => {
+      const button = event.target.closest('.statistic__button-first');
+      if (!button) return;
+
+      this._removeActiveState();
+      this._removeFirstActiveState();
+
+      const option = button.dataset.firstoption;
+      button.classList.add('statistic__button-active');
+      this._changeInfo('Agora, selecione a fase desejada!');
+      this._toggleButtonsContainer(this._levelButtonsContainer, true);
+    });
+  }
+
+  _addClickLevel() {
+    this._levelButtonsContainer.addEventListener('click', (event) => {
+      const button = event.target.closest('.statistic__button');
+      if (!button) return;
+
+      this._removeActiveState();
+      button.classList.add('statistic__button-active');
+      const level = button.dataset.levels;
+      console.log(level);
+
+      this._getLevelData(level);
+    });
+  }
+
+  _removeActiveState() {
+    const buttons = document.querySelectorAll('.statistic__button');
+    buttons.forEach((button) =>
+      button.classList.remove('statistic__button-active')
+    );
+  }
+
+  _removeFirstActiveState() {
+    const firstButtons = document.querySelectorAll('.statistic__button-first');
+    firstButtons.forEach((button) => {
+      button.classList.remove('statistic__button-active');
+    });
+  }
+
+  _changeInfo(message) {
+    const messageElement = document.querySelector('.statistics__info-message');
+    messageElement.textContent = message;
+  }
+
+  _toggleButtonsContainer(container, state) {
+    if (state) container.style.display = 'flex';
+    if (!state) container.style.display = 'none';
+  }
+
+  _getContainers() {
+    this._firstContainer = document.querySelector(
+      '.statistic__button-firstContainer'
+    );
+
+    this._levelButtonsContainer = document.querySelector(
+      '.statistics__button-levels'
+    );
+
+    this._metricButtonsContainer = document.querySelector(
+      '.statistics__button-metrics'
+    );
+
+    this._ageButtonsContainer = document.querySelector(
+      '.statistics__button-ages'
+    );
+
+    this._infoContainer = document.querySelector('.statistics__info');
+
+    this._chartContainer = document.querySelector(
+      '.statistics__chart-container'
+    );
+
+    this._errorContainer = document.querySelector('.statistics__error');
   }
 }
 

@@ -44,9 +44,9 @@ export const getResults = async function (data) {
       puzzleID: data.id,
       data: {
         focusTime: Number(data.data.focusTime.toFixed(2)),
-        wrongMoves: data.data.wrongMoves,
-        completeTime: data.data.completeTime,
-        hints: data.data.hints,
+        wrongMoves: +data.data.wrongMoves,
+        completeTime: +data.data.completeTime,
+        hints: +data.data.hints,
       },
     },
     withCredentials: true,

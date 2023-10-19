@@ -640,10 +640,6 @@ video {
   margin-bottom: 1rem;
 }
 
-.mb-16{
-  margin-bottom: 4rem;
-}
-
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -868,6 +864,10 @@ video {
   width: 75%;
 }
 
+.w-\[8\%\]{
+  width: 8%;
+}
+
 .w-\[80\%\]{
   width: 80%;
 }
@@ -890,10 +890,6 @@ video {
 
 .w-screen{
   width: 100vw;
-}
-
-.w-\[8\%\]{
-  width: 8%;
 }
 
 .max-w-\[18\%\]{
@@ -1347,10 +1343,6 @@ video {
 
 .pt-8{
   padding-top: 2rem;
-}
-
-.pb-16{
-  padding-bottom: 4rem;
 }
 
 .text-center{
