@@ -44,6 +44,8 @@ class App {
 
   currentUser = {};
 
+  AdminDashboard;
+
   constructor() {
     this._addEventListeners();
   }
@@ -82,7 +84,7 @@ class App {
     }
   }
 
-  async _renderAdminView() {
+  async _renderAdminView(isActive = false) {
     try {
       const response = await axios({
         url: `http://127.0.0.1:3000/api/v1/users/adminView/adminView`,
@@ -91,7 +93,8 @@ class App {
       });
 
       this._clearAndInsertHTML(response.data.data.html);
-      const dashboard = new AdminDashboard(this.currentUser);
+      if (isActive) return this.AdminDashboard.init(this.currentUser);
+      this.AdminDashboard = new AdminDashboard(this.currentUser);
     } catch (err) {
       console.log(err.response.data.message);
       this._clearAndInsertHTML(this.notAuthHTML);

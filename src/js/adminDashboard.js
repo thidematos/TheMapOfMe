@@ -2,10 +2,19 @@ import * as dashboards from './dashboards.js';
 
 class AdminDashboard {
   hash = '';
+  dashes = {
+    Feedbacks: new dashboards.Feedbacks(),
+    Stories: new dashboards.Stories(),
+    Statistics: new dashboards.Statistics(),
+  };
 
   constructor(currentUser) {
-    this.currentUser = currentUser;
     this.createHashChangeListener();
+    this.init(currentUser);
+  }
+
+  init(currentUser) {
+    this.currentUser = currentUser;
     this.replaceGuideName();
     this.addListenerButtons();
   }
@@ -33,11 +42,13 @@ class AdminDashboard {
   }
 
   createHashChangeListener() {
-    window.addEventListener('hashchange', () => {
-      const hashID = window.location.hash.replace('#', '');
-      if (!hashID) return;
-      const currentDashboard = new dashboards[hashID](hashID);
-    });
+    window.addEventListener('hashchange', this.handleHashChange.bind(this));
+  }
+
+  handleHashChange() {
+    const hashID = window.location.hash.replace('#', '');
+    if (!hashID) return;
+    this.dashes[hashID].init(hashID);
   }
 }
 

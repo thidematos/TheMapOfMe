@@ -31,7 +31,9 @@ class DashboardView {
   </div>
 </main>`;
 
-  constructor(hash) {
+  constructor() {}
+
+  init(hash) {
     this.hash = hash;
     this._renderSpinner();
     this.auth();
@@ -41,7 +43,7 @@ class DashboardView {
     const backButton = document.querySelector('.back__button');
     backButton.addEventListener('click', (event) => {
       window.location.hash = '';
-      App._renderAdminView();
+      App._renderAdminView(true);
     });
   }
 
@@ -91,8 +93,8 @@ class DashboardView {
 }
 
 export class Statistics extends DashboardView {
-  constructor(hash) {
-    super(hash);
+  constructor() {
+    super();
     console.log('Statistics');
   }
 }
@@ -143,8 +145,14 @@ export class Feedbacks extends DashboardView {
 
   starTagHTML = `<i class="modal__rating-star fa-solid fa-star text-yellow-300"></i>`;
   _usersArr;
-  constructor(hash) {
-    super(hash);
+  constructor() {
+    super();
+  }
+
+  init(hash) {
+    this.hash = hash;
+    this._renderSpinner();
+    this.auth();
     this._getAllUsers();
   }
 
@@ -155,6 +163,7 @@ export class Feedbacks extends DashboardView {
       withCredentials: true,
     });
     this._usersArr = response.data.data.data;
+    console.log(response);
     this._renderUsersCards(this._usersArr, this.userCardHTML);
     this._addClickModal();
   }
@@ -279,9 +288,14 @@ export class Stories extends DashboardView {
       <p class="story__text-timestamp">%TIMESTAMP%</p>
   </div>`;
 
-  constructor(hash) {
-    super(hash);
+  constructor() {
+    super();
+  }
 
+  init(hash) {
+    this.hash = hash;
+    this._renderSpinner();
+    this.auth();
     this._getAllStories();
   }
 
