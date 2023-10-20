@@ -174,6 +174,7 @@ export class Statistics extends DashboardView {
 
   _renderBarChart(data, currentChart) {
     const averages = data;
+    this._toggleButtonsContainer(false, this._infoContainer);
 
     if (!averages) return this._renderErrorCanvas();
 
@@ -225,7 +226,6 @@ export class Statistics extends DashboardView {
         },
       },
     });
-    this._toggleButtonsContainer(false, this._infoContainer);
   }
 
   _renderAgeChart(data, currentChart) {
