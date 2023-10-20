@@ -104,6 +104,8 @@ export class Statistics extends DashboardView {
     this._getContainers();
     this._addClickFirstOption();
     this._addClickLevel();
+    this._addClickMetric();
+    this._addClickAges();
   }
 
   async _getLevelData(level) {
@@ -116,13 +118,44 @@ export class Statistics extends DashboardView {
     this._renderBarChart(response.data.data.statistics[0], level);
   }
 
-  _clearCanvas(currentChart) {
-    this._chartContainer.innerHTML = '';
+  async _getMetricData(metric) {
+    const response = await axios({
+      method: 'GET',
+      url: `http://127.0.0.1:3000/api/v1/users/statistics/metrics/${metric}`,
+      withCredentials: true,
+    });
 
-    const html = `<canvas id="${currentChart}" class=" border-2 border-solid border-orange-300 rounded-lg shadow-xl bg-gray-50">
+    this._renderMetricChartInfo(response.data.data.metrics);
+    this._renderMetricChart(response.data.data.metrics, metric);
+  }
+
+  async _getAgeData(age) {
+    const response = await axios({
+      method: 'GET',
+      url: `http://127.0.0.1:3000/api/v1/users/statistics/ages/${age}`,
+      withCredentials: true,
+    });
+
+    this._renderAgeChart(response.data.data.ages, age);
+  }
+
+  _clearCanvas(currentChart, isMetric = false, isAge = false) {
+    const html = `<canvas id="${currentChart}" class="oldCanvas w-[${
+      isAge ? '40' : '75'
+    }%] border-2 border-solid border-orange-300 rounded-lg shadow-xl bg-gray-50">
     </canvas>`;
+    if (!isMetric) {
+      if (!isAge) {
+        this._chartContainer.innerHTML = '';
+      }
 
-    this._chartContainer.insertAdjacentHTML('beforeend', html);
+      this._chartContainer.insertAdjacentHTML('beforeend', html);
+    } else if (isMetric) {
+      document
+        .querySelectorAll('.oldCanvas')
+        .forEach((canvas) => canvas.remove());
+      this._chartContainerMetrics.insertAdjacentHTML('afterbegin', html);
+    }
 
     return document.querySelector(`#${currentChart}`);
   }
@@ -135,8 +168,8 @@ export class Statistics extends DashboardView {
   }
 
   _renderErrorCanvas() {
-    this._toggleButtonsContainer(this._chartContainer, false);
-    this._toggleButtonsContainer(this._errorContainer, true);
+    this._toggleButtonsContainer(false, this._chartContainer);
+    this._toggleButtonsContainer(true, this._errorContainer);
   }
 
   _renderBarChart(data, currentChart) {
@@ -144,12 +177,12 @@ export class Statistics extends DashboardView {
 
     if (!averages) return this._renderErrorCanvas();
 
-    this._toggleButtonsContainer(this._errorContainer, false);
+    this._toggleButtonsContainer(false, this._errorContainer);
     this._configChart();
 
     let currentCanvas = this._clearCanvas(currentChart);
 
-    this._toggleButtonsContainer(this._chartContainer, true);
+    this._toggleButtonsContainer(true, this._chartContainer);
 
     currentCanvas = currentCanvas.getContext('2d');
     const chart = new Chart(currentCanvas, {
@@ -192,7 +225,188 @@ export class Statistics extends DashboardView {
         },
       },
     });
-    this._toggleButtonsContainer(this._infoContainer, false);
+    this._toggleButtonsContainer(false, this._infoContainer);
+  }
+
+  _renderAgeChart(data, currentChart) {
+    const ages = data;
+
+    if (!ages) return this._renderErrorCanvas();
+
+    const alreadyCanvas = document.querySelectorAll('.oldCanvas');
+    if (alreadyCanvas[0]) this._chartContainer.innerHTML = '';
+
+    this._toggleButtonsContainer(false, this._errorContainer);
+    this._configChart();
+
+    const maps = Object.values(ages);
+    const mapsNames = Object.keys(ages);
+
+    this._toggleButtonsContainer(true, this._chartContainer);
+
+    maps.forEach((map, ind) => {
+      let currentCanvas = this._clearCanvas(mapsNames[ind], false, true);
+      currentCanvas = currentCanvas.getContext('2d');
+
+      const chart = new Chart(currentCanvas, {
+        type: 'bar',
+
+        data: {
+          labels: [
+            'Tempo de foco (segundos)',
+            'Tempo de montagem (segundos)',
+            'Movimentos errados',
+            'Dicas usadas',
+          ],
+          datasets: [
+            {
+              label: map.numOfUsers
+                ? `Média Geral: ${map.numOfUsers} exploradores`
+                : 'Os jogadores dessa faixa etária ainda não completaram essa fase!',
+              data: [
+                map.avgFocusTime,
+                map.avgDurationToComplete,
+                map.avgWrongMoves,
+                map.avgHints,
+              ],
+              backgroundColor: 'rgb(34,139,230)',
+              borderRadius: '8',
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text:
+                mapsNames[ind] === 'mapOne'
+                  ? 'Felicidade!'
+                  : undefined || mapsNames[ind] === 'mapTwo'
+                  ? 'Admiração!'
+                  : undefined || mapsNames[ind] === 'mapThree'
+                  ? 'Medo!'
+                  : undefined || mapsNames[ind] === 'mapFour'
+                  ? 'Coragem!'
+                  : undefined || mapsNames[ind] === 'mapFive'
+                  ? 'Diversão!'
+                  : undefined || mapsNames[ind] === 'mapSix'
+                  ? 'Empatia!'
+                  : undefined || mapsNames[ind] === 'mapSeven'
+                  ? 'Esperança!'
+                  : undefined || mapsNames[ind] === 'mapEight'
+                  ? 'The Map of Me!'
+                  : undefined,
+              font: {
+                family: 'Plus Jakarta Sans',
+                size: 24,
+              },
+            },
+          },
+          layout: {
+            padding: 10,
+          },
+        },
+      });
+    });
+
+    this._toggleButtonsContainer(false, this._infoContainer);
+  }
+
+  _renderMetricChartInfo(data) {
+    if (document.querySelector('.chartInfo')) return;
+
+    const html = `
+  <ul class="chartInfo flex flex-col justify-center items-center w-[20%] font-jakarta text-gray-800 tracking-wider list-disc gap-4">
+    <h2 class="list-none">Número de usuários considerados</h2>
+    <li>Felicidade: ${
+      data.mapOne.numOfUsers || data.mapOne
+    } explorador(es) </li>
+    <li>Admiração: ${data.mapTwo.numOfUsers || data.mapTwo} explorador(es) </li>
+    <li>Medo: ${data.mapThree.numOfUsers || data.mapThree} explorador(es)</li>
+    <li>Coragem: ${data.mapFour.numOfUsers || data.mapFour} explorador(es) </li>
+    <li>Diversão: ${
+      data.mapFive.numOfUsers || data.mapFive
+    } explorador(es) </li>
+    <li>Empatia: ${data.mapSix.numOfUsers || data.mapSix} explorador(es) </li>
+    <li>Esperança: ${
+      data.mapSeven.numOfUsers || data.mapSeven
+    } explorador(es) </li>
+    <li>The Map of Me: ${
+      data.mapEight.numOfUsers || data.mapEight
+    } explorador(es) </li>
+  </ul>`;
+    this._chartContainerMetrics.insertAdjacentHTML('beforeend', html);
+  }
+
+  _renderMetricChart(data, currentChart) {
+    const averages = data;
+
+    this._toggleButtonsContainer(false, this._errorContainer);
+    this._configChart();
+
+    let currentCanvas = this._clearCanvas(currentChart, true);
+
+    this._toggleButtonsContainer(true, this._chartContainerMetrics);
+
+    currentCanvas = currentCanvas.getContext('2d');
+    const chart = new Chart(currentCanvas, {
+      type: 'bar',
+
+      data: {
+        labels: [
+          'Felicidade',
+          'Admiração',
+          'Medo',
+          'Coragem',
+          'Diversão',
+          'Empatia',
+          'Esperança',
+          'The Map of Me',
+        ],
+        datasets: [
+          {
+            label:
+              currentChart === 'focusTime'
+                ? 'Tempo de foco (segundos)'
+                : undefined || currentChart === 'durationToComplete'
+                ? 'Tempo de montagem (segundos)'
+                : undefined || currentChart === 'hints'
+                ? 'Número de dicas'
+                : undefined || currentChart === 'wrongMoves'
+                ? 'Número de erros'
+                : undefined,
+            data: [
+              averages.mapOne[`avg${currentChart}MapOne`],
+              averages.mapTwo[`avg${currentChart}MapTwo`],
+              averages.mapThree[`avg${currentChart}MapThree`],
+              averages.mapFour[`avg${currentChart}MapFour`],
+              averages.mapFive[`avg${currentChart}MapFive`],
+              averages.mapSix[`avg${currentChart}MapSix`],
+              averages.mapSeven[`avg${currentChart}MapSeven`],
+              averages.mapEight[`avg${currentChart}MapEight`],
+            ],
+            backgroundColor: 'rgb(34,139,230)',
+            borderRadius: '8',
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: `Desempenho médio de todos os exploradores`,
+            font: {
+              family: 'Plus Jakarta Sans',
+              size: 24,
+            },
+          },
+        },
+        layout: {
+          padding: 10,
+        },
+      },
+    });
+    this._toggleButtonsContainer(false, this._infoContainer);
   }
 
   _addClickFirstOption() {
@@ -200,13 +414,37 @@ export class Statistics extends DashboardView {
       const button = event.target.closest('.statistic__button-first');
       if (!button) return;
 
+      this._containers.forEach((container) =>
+        this._toggleButtonsContainer(false, container)
+      );
       this._removeActiveState();
       this._removeFirstActiveState();
 
       const option = button.dataset.firstoption;
       button.classList.add('statistic__button-active');
-      this._changeInfo('Agora, selecione a fase desejada!');
-      this._toggleButtonsContainer(this._levelButtonsContainer, true);
+
+      if (option === 'levels') {
+        this._changeInfo('Agora, selecione a fase desejada!');
+        this._toggleButtonsContainer(
+          true,
+          this._levelButtonsContainer,
+          this._infoContainer
+        );
+      } else if (option === 'metrics') {
+        this._changeInfo('Agora, selecione a métrica desejada!');
+        this._toggleButtonsContainer(
+          true,
+          this._metricButtonsContainer,
+          this._infoContainer
+        );
+      } else if (option === 'ages') {
+        this._changeInfo('Agora, selecione a faixa etária desejada!');
+        this._toggleButtonsContainer(
+          true,
+          this._ageButtonsContainer,
+          this._infoContainer
+        );
+      }
     });
   }
 
@@ -221,6 +459,34 @@ export class Statistics extends DashboardView {
       console.log(level);
 
       this._getLevelData(level);
+    });
+  }
+
+  _addClickMetric() {
+    this._metricButtonsContainer.addEventListener('click', (event) => {
+      const button = event.target.closest('.statistic__button');
+      if (!button) return;
+
+      this._removeActiveState();
+      button.classList.add('statistic__button-active');
+      const metric = button.dataset.metrics;
+      console.log(metric);
+
+      this._getMetricData(metric);
+    });
+  }
+
+  _addClickAges() {
+    this._ageButtonsContainer.addEventListener('click', (event) => {
+      const button = event.target.closest('.statistic__button');
+      if (!button) return;
+
+      this._removeActiveState();
+      button.classList.add('statistic__button-active');
+      const age = button.dataset.ages;
+      console.log(age);
+
+      this._getAgeData(age);
     });
   }
 
@@ -243,9 +509,11 @@ export class Statistics extends DashboardView {
     messageElement.textContent = message;
   }
 
-  _toggleButtonsContainer(container, state) {
-    if (state) container.style.display = 'flex';
-    if (!state) container.style.display = 'none';
+  _toggleButtonsContainer(state, ...containers) {
+    containers.forEach((container) => {
+      if (state) container.style.display = 'flex';
+      if (!state) container.style.display = 'none';
+    });
   }
 
   _getContainers() {
@@ -271,7 +539,21 @@ export class Statistics extends DashboardView {
       '.statistics__chart-container'
     );
 
+    this._chartContainerMetrics = document.querySelector(
+      '.statistics__chart-container-metrics'
+    );
+
     this._errorContainer = document.querySelector('.statistics__error');
+
+    this._containers = [
+      this._levelButtonsContainer,
+      this._metricButtonsContainer,
+      this._ageButtonsContainer,
+      this._infoContainer,
+      this._errorContainer,
+      this._chartContainer,
+      this._chartContainerMetrics,
+    ];
   }
 }
 
