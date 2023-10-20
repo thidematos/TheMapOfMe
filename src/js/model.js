@@ -92,6 +92,7 @@ export const changeReviewStatus = async function (event) {
       level: event.detail.level,
       description: event.detail.description,
       rating: +event.detail.rating + 1,
+      timeStamp: event.detail.timeStamp,
     },
     withCredentials: true,
   });
