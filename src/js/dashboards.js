@@ -19,7 +19,7 @@ class DashboardView {
         Infelizmente, você não pode aventurar por esse caminho!
       </h1>
       <h2 class="error__message font-jakarta text-gray-700 tracking-wider">
-        ERROR MESSAGE
+        %ERROR_MESSAGE%
       </h2>
       <a
         href="index.html"
@@ -66,7 +66,12 @@ class DashboardView {
       this._renderPage(response.data.data.html);
       this._addClickReturn();
     } catch (err) {
-      this._renderPage(this.notAuthHTML);
+      const notAuth = this.notAuthHTML.replace(
+        '%ERROR_MESSAGE%',
+        err.response.data.message
+      );
+
+      this._renderPage(notAuth);
     }
   }
 

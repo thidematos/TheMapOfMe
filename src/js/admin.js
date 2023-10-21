@@ -30,7 +30,7 @@ class App {
         Infelizmente, você não pode aventurar por esse caminho!
       </h1>
       <h2 class="error__message font-jakarta text-gray-700 tracking-wider">
-        ERROR MESSAGE
+        %ERROR_MESSAGE%
       </h2>
       <a
         href="index.html"
@@ -96,8 +96,12 @@ class App {
       if (isActive) return this.AdminDashboard.init(this.currentUser);
       this.AdminDashboard = new AdminDashboard(this.currentUser);
     } catch (err) {
+      const notAuth = this.notAuthHTML.replace(
+        '%ERROR_MESSAGE%',
+        err.response.data.message
+      );
       console.log(err.response.data.message);
-      this._clearAndInsertHTML(this.notAuthHTML);
+      this._clearAndInsertHTML(notAuth);
     }
   }
 
