@@ -45,7 +45,6 @@ class View {
     const response = await axios({
       method: 'POST',
       url: devFetch + '/verifyAuth',
-      withCredentials: true,
     });
     if (!response.data.verified) return false;
     return true;
