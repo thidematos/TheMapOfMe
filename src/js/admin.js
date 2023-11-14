@@ -64,7 +64,20 @@ class App {
 
   async _login() {
     try {
-      const currentUser = await axios({
+      const currentUser = await fetch(
+        `https://rich-pink-cow-toga.cyclic.app/api/v1/users/login`,
+        {
+          method: 'POST',
+          body: {
+            email: JSON.stringify(this._crud.user),
+            password: JSON.stringify(this._crud.password),
+          },
+          headers: { 'Content-type': 'application/json' },
+          credentials: 'include',
+        }
+      );
+      /*
+      axios({
         url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/login`,
         method: 'POST',
         data: {
@@ -73,6 +86,7 @@ class App {
         },
         withCredentials: true,
       });
+      */
       this.currentUser = currentUser.data.data.user;
       console.log(this.currentUser);
       this._toggleLoader();
