@@ -44,7 +44,7 @@ class View {
   async verifyJWT() {
     const response = await axios({
       method: 'POST',
-      url: 'https://rich-pink-cow-toga.cyclic.app/api/v1/users/verifyAuth',
+      url: 'https://map-of-me-api.onrender.com/api/v1/users/verifyAuth',
       withCredentials: true,
     });
     if (!response.data.verified) return false;

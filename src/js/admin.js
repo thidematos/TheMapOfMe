@@ -64,21 +64,8 @@ class App {
 
   async _login() {
     try {
-      const currentUser = await fetch(
-        `https://rich-pink-cow-toga.cyclic.app/api/v1/users/login`,
-        {
-          method: 'POST',
-          body: {
-            email: JSON.stringify(this._crud.user),
-            password: JSON.stringify(this._crud.password),
-          },
-          headers: { 'Content-type': 'application/json' },
-          credentials: 'include',
-        }
-      );
-      /*
-      axios({
-        url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/login`,
+      const currentUser = await axios({
+        url: `https://map-of-me-api.onrender.com/api/v1/users/login`,
         method: 'POST',
         data: {
           email: this._crud.user,
@@ -86,7 +73,7 @@ class App {
         },
         withCredentials: true,
       });
-      */
+
       this.currentUser = currentUser.data.data.user;
       console.log(this.currentUser);
       this._toggleLoader();
@@ -101,7 +88,7 @@ class App {
   async _renderAdminView(isActive = false) {
     try {
       const response = await axios({
-        url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/adminView/adminView`,
+        url: `https://map-of-me-api.onrender.com/api/v1/users/adminView/adminView`,
         method: 'GET',
         withCredentials: true,
       });
