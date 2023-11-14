@@ -59,7 +59,7 @@ class DashboardView {
   async auth() {
     try {
       const response = await axios({
-        url: `http://127.0.0.1:3000/api/v1/users/adminView/${this.hash}`,
+        url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/adminView/${this.hash}`,
         method: 'GET',
         withCredentials: true,
       });
@@ -116,7 +116,7 @@ export class Statistics extends DashboardView {
   async _getLevelData(level) {
     const response = await axios({
       method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/users/statistics/levels/${level}`,
+      url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/statistics/levels/${level}`,
       withCredentials: true,
     });
 
@@ -126,7 +126,7 @@ export class Statistics extends DashboardView {
   async _getMetricData(metric) {
     const response = await axios({
       method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/users/statistics/metrics/${metric}`,
+      url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/statistics/metrics/${metric}`,
       withCredentials: true,
     });
 
@@ -137,7 +137,7 @@ export class Statistics extends DashboardView {
   async _getAgeData(age) {
     const response = await axios({
       method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/users/statistics/ages/${age}`,
+      url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/statistics/ages/${age}`,
       withCredentials: true,
     });
 
@@ -621,7 +621,7 @@ export class Feedbacks extends DashboardView {
 
   async _getAllUsers() {
     const response = await axios({
-      url: `http://127.0.0.1:3000/api/v1/users/usersFeedbacks`,
+      url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/usersFeedbacks`,
       method: 'GET',
       withCredentials: true,
     });
@@ -786,7 +786,7 @@ export class Stories extends DashboardView {
   async _getAllStories() {
     try {
       const response = await axios({
-        url: `http://127.0.0.1:3000/api/v1/users?fields=true`,
+        url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users?fields=true`,
         method: 'GET',
         withCredentials: true,
       });

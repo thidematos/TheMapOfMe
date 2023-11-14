@@ -65,7 +65,7 @@ class App {
   async _login() {
     try {
       const currentUser = await axios({
-        url: `http://127.0.0.1:3000/api/v1/users/login`,
+        url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/login`,
         method: 'POST',
         data: {
           email: this._crud.user,
@@ -87,7 +87,7 @@ class App {
   async _renderAdminView(isActive = false) {
     try {
       const response = await axios({
-        url: `http://127.0.0.1:3000/api/v1/users/adminView/adminView`,
+        url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/adminView/adminView`,
         method: 'GET',
         withCredentials: true,
       });

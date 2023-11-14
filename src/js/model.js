@@ -9,7 +9,7 @@ export const state = {
 export const approveLogin = async function (inputEmail, inputPassword) {
   try {
     const responseData = await axios({
-      url: 'http://127.0.0.1:3000/api/v1/users/login',
+      url: 'https://rich-pink-cow-toga.cyclic.app/api/v1/users/login',
       method: 'POST',
       data: {
         email: inputEmail,
@@ -38,7 +38,7 @@ export const changeHash = function (hash = 'adventure-map') {
 
 export const getResults = async function (data) {
   const updatedUser = await axios({
-    url: `http://127.0.0.1:3000/api/v1/users/${state.currentUser._id}`,
+    url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/${state.currentUser._id}`,
     method: 'PATCH',
     data: {
       puzzleID: data.id,
@@ -58,7 +58,7 @@ export const getResults = async function (data) {
 
 export const changeStateEndGame = async function () {
   const updatedUser = await axios({
-    url: `http://127.0.0.1:3000/api/v1/users/${state.currentUser._id}`,
+    url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/${state.currentUser._id}`,
     method: 'PATCH',
     data: {
       alreadyEnded: true,
@@ -73,7 +73,7 @@ export const changeStateEndGame = async function () {
 
 export const changeStateBegin = async function () {
   await axios({
-    url: `http://127.0.0.1:3000/api/v1/users/${state.currentUser._id}`,
+    url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/${state.currentUser._id}`,
     method: 'PATCH',
     data: {
       alreadyBegin: true,
@@ -84,7 +84,7 @@ export const changeStateBegin = async function () {
 
 export const changeReviewStatus = async function (event) {
   const updatedUser = await axios({
-    url: `http://127.0.0.1:3000/api/v1/users/${state.currentUser._id}`,
+    url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/${state.currentUser._id}`,
     method: 'PATCH',
     data: {
       hasFeedback: true,

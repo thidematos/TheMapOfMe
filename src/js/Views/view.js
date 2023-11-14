@@ -1,6 +1,3 @@
-const prodFetch = 'https://map-of-me-api.onrender.com/api/v1/users';
-const devFetch = 'http://127.0.0.1:3000/api/v1/users';
-
 class View {
   _data;
   _body = document.querySelector('body');
