@@ -44,7 +44,8 @@ class View {
   async verifyJWT() {
     const response = await axios({
       method: 'POST',
-      url: devFetch + '/verifyAuth',
+      url: 'https://rich-pink-cow-toga.cyclic.app/api/v1/users/verifyAuth',
+      withCredentials: true,
     });
     if (!response.data.verified) return false;
     return true;

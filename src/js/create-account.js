@@ -210,6 +210,7 @@ class CreateAccount {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(this.accountData),
+          withCredentials: true,
         }
       );
 

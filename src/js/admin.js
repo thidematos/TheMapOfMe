@@ -71,6 +71,7 @@ class App {
           email: this._crud.user,
           password: this._crud.password,
         },
+        withCredentials: true,
       });
       this.currentUser = currentUser.data.data.user;
       console.log(this.currentUser);
@@ -88,6 +89,7 @@ class App {
       const response = await axios({
         url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/adminView/adminView`,
         method: 'GET',
+        withCredentials: true,
       });
 
       this._clearAndInsertHTML(response.data.data.html);

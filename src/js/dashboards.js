@@ -61,6 +61,7 @@ class DashboardView {
       const response = await axios({
         url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/adminView/${this.hash}`,
         method: 'GET',
+        withCredentials: true,
       });
       this._renderPage(response.data.data.html);
       this._addClickReturn();
@@ -116,6 +117,7 @@ export class Statistics extends DashboardView {
     const response = await axios({
       method: 'GET',
       url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/statistics/levels/${level}`,
+      withCredentials: true,
     });
 
     this._renderBarChart(response.data.data.statistics[0], level);
@@ -125,6 +127,7 @@ export class Statistics extends DashboardView {
     const response = await axios({
       method: 'GET',
       url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/statistics/metrics/${metric}`,
+      withCredentials: true,
     });
 
     this._renderMetricChartInfo(response.data.data.metrics);
@@ -135,6 +138,7 @@ export class Statistics extends DashboardView {
     const response = await axios({
       method: 'GET',
       url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/statistics/ages/${age}`,
+      withCredentials: true,
     });
 
     this._renderAgeChart(response.data.data.ages, age);
@@ -619,6 +623,7 @@ export class Feedbacks extends DashboardView {
     const response = await axios({
       url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/usersFeedbacks`,
       method: 'GET',
+      withCredentials: true,
     });
     this._usersArr = response.data.data.data;
     console.log(response);
@@ -783,6 +788,7 @@ export class Stories extends DashboardView {
       const response = await axios({
         url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users?fields=true`,
         method: 'GET',
+        withCredentials: true,
       });
 
       this._renderCardStory(response.data.data.users, this.cardStoryHTML);

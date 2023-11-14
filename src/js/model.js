@@ -15,6 +15,7 @@ export const approveLogin = async function (inputEmail, inputPassword) {
         email: inputEmail,
         password: inputPassword,
       },
+      withCredentials: true,
     });
     console.log(responseData);
 
@@ -47,6 +48,7 @@ export const getResults = async function (data) {
         completeTime: +data.data.completeTime,
         hints: +data.data.hints,
       },
+      withCredentials: true,
     },
   });
   console.log(updatedUser);
@@ -61,6 +63,7 @@ export const changeStateEndGame = async function () {
     data: {
       alreadyEnded: true,
     },
+    withCredentials: true,
   });
 
   state.currentUser = updatedUser.data.data.user;
@@ -75,6 +78,7 @@ export const changeStateBegin = async function () {
     data: {
       alreadyBegin: true,
     },
+    withCredentials: true,
   });
 };
 
@@ -90,6 +94,7 @@ export const changeReviewStatus = async function (event) {
       rating: +event.detail.rating + 1,
       timeStamp: event.detail.timeStamp,
     },
+    withCredentials: true,
   });
 
   state.currentUser = updatedUser.data.data.user;
