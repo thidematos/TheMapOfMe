@@ -65,7 +65,7 @@ class App {
   async _login() {
     try {
       const currentUser = await axios({
-        url: `https://map-of-me-api.onrender.com/api/v1/users/login`,
+        url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/login`,
         method: 'POST',
         data: {
           email: this._crud.user,
@@ -88,7 +88,7 @@ class App {
   async _renderAdminView(isActive = false) {
     try {
       const response = await axios({
-        url: `https://map-of-me-api.onrender.com/api/v1/users/adminView/adminView`,
+        url: `https://rich-pink-cow-toga.cyclic.app/api/v1/users/adminView/adminView`,
         method: 'GET',
         withCredentials: true,
       });
